@@ -16,6 +16,8 @@ import xlsxwriter
 
 from geopy.distance import great_circle
 
+from geopy.geocoders import Nominatim
+
 
 st.set_page_config('System strength',layout='wide')
 
@@ -211,8 +213,39 @@ with st.beta_expander('Show grid strength data'):
 
 st.header('Check grid strength for a certain location')
 
-latitude = st.number_input('Latitude',value=-24.2131906)
-longitude = st.number_input('Longitude',value=151.5789714)
+choice = st.radio('Location search mode',['Text search','Latitude Longitude'],0)
+
+placeholder = st.empty()
+
+if choice == 'Text search':
+    geolocator = Nominatim(user_agent='latlong.py')
+    st.markdown('')
+
+    farm = st.text_input('Please enter the name of the place you are looking for (recommend format: Karadoc, Australia):','Karadoc, Australia')
+
+    def getlatlon(place):
+        try:
+            location = geolocator.geocode(place)
+            return (location.latitude,location.longitude)
+        except:
+            return ('N/A','N/A')
+
+    if getlatlon(farm)[0] == 'N/A':
+        placeholder = st.write('Wrong location, please enter a new location or select Location search mode = Latitude Longitude')
+        st.stop()
+
+    latitude = getlatlon(farm)[0]
+    longitude = getlatlon(farm)[1]
+
+    # if latitude or longitude == 'N/A'
+
+
+elif choice == 'Latitude Longitude':
+    latitude = st.number_input('Latitude',value=-24.2131906)
+    longitude = st.number_input('Longitude',value=151.5789714)
+
+
+
 
 station_to_find = {'lat':latitude,'lon':longitude}
 
