@@ -234,6 +234,9 @@ if choice == 'Text search':
         placeholder = st.error('Wrong location, please enter a new location or select Location search mode = Latitude Longitude')
         st.stop()
 
+    latitude = getlatlon(farm)[0]
+    longitude = getlatlon(farm)[1]
+
     # if latitude or longitude == 'N/A'
 
 
