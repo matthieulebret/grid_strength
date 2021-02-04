@@ -231,11 +231,8 @@ if choice == 'Text search':
             return ('N/A','N/A')
 
     if getlatlon(farm)[0] == 'N/A':
-        placeholder = st.write('Wrong location, please enter a new location or select Location search mode = Latitude Longitude')
+        placeholder = st.error('Wrong location, please enter a new location or select Location search mode = Latitude Longitude')
         st.stop()
-
-    latitude = getlatlon(farm)[0]
-    longitude = getlatlon(farm)[1]
 
     # if latitude or longitude == 'N/A'
 
